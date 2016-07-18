@@ -1,47 +1,103 @@
-$(document).ready(function () {
-    var userInput;
-    $('#txt-input').keypress(function(event) {
-       if(event.which == 13) {
-           userInput = $('#txt-input').val();
-           userInput = userInput.trim().replace(/\s+/g, '+');
-           event.preventDefault();
-           getAPI(userInput);
-       } 
-    });
-    
-    
-});
+$(document).ready(function() {
 
-function getAPI(userInput) {
-    var entryPoint = "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=" + userInput + "&limit=5";
+  //Function to check if the input search box isn't empty 
+  function checkInput() {
+    if ($('#before_search').val() == "") {
+      alert('Please enter a keyword to search');
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  //When the search button is clicked 
+  $('#search').click(function() {
+    if (checkInput()) {
+      search();
+    }
+  });
+
+  //When the user starts typing in..
+  $(document).keyup(function(e) {
+    if (e.which == 13) {
+      if (checkInput()) {
+        if ($('#searched_results_display').hasClass('hidden')) {
+
+          search();
+        } else {
+          var keyword = $('#after_search').val();
+          getWikiData(keyword);
+        }
+
+      }
+
+    } else {
+      if ($('.wrapper').hasClass('hidden')) {
+
+        var keyword = $('#after_search').val();
+        getWikiData(keyword);
+      }
+    }
+  });
+
+  //Changing the view when search button is clicked
+  function search() {
+
+    var keyword = $('#before_search').val();
+    $('#after_search').val(keyword);
+    $('.wrapper').addClass('hidden');
+    $('#searched_results_display').removeClass('hidden');
+    getWikiData(keyword);
+
+  }
+
+  //Function which does the magic of getting the wiki data according to the keyword user searches for
+  function getWikiData(keyword) {
     $.ajax({
-        dataType: "jsonp",
-        url: entryPoint,
-        success: callback
-    });
-}
+      url: "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + keyword + "&prop=info&inprop=url&utf8=&format=json",
+      dataType: "jsonp",
+      success: function(wikiResponse) {
+        if (wikiResponse.query.searchinfo.totalhits == 0) {
+          $('.wiki_results').html("");
+          $('.wiki_results').append("<div class='error'><div>Your search - <b>" + keyword + "</b> - did not match any documents.</div>" + "<br>" + "<div>Suggestions:</div>" + "<br>" + "<ul><li>Make sure that all words are spelled correctly</li><li>Try different keywords</li><li>Try more general words</li><li>Try fewer keywords</li></ul></div>");
+        } else {
+          showResults(wikiResponse);
+        }
 
-function callback(data) {
-     $("#title1").text(data[1][0]);
-     $("#title2").text(data[1][1]);
-     $("#title3").text(data[1][2]);
-     $("#title4").text(data[1][3]);
-     $("#title5").text(data[1][4]);
-     $("#des1").text(data[2][0]);
-     $("#des2").text(data[2][1]);
-     $("#des3").text(data[2][2]);
-     $("#des4").text(data[2][3]);
-     $("#des5").text(data[2][4]);
-     $("#url1").text(data[3][0]);
-     $("#url1").attr("href", data[3][0]);
-     $("#url2").text(data[3][1]);
-     $("#url2").attr("href", data[3][1]);
-     $("#url3").text(data[3][2]);
-     $("#url3").attr("href", data[3][2]);
-     $("#url4").text(data[3][3]);
-     $("#url4").attr("href", data[3][3]);
-     $("#url5").text(data[3][4]);
-     $("#url5").attr("href", data[3][4]);
-     $(".result").css('background', 'rgba(300,300,300, .8)');
-     $('form').css('top', '0px');
-}
+      },
+      error: function() {
+        alert('Error retrieving the desired results');
+      }
+    });
+  }
+
+  //Showing the results we retrieved from the wiki api in our html page
+  function showResults(wikiResponse) {
+    console.log(wikiResponse);
+    $('.wiki_results').html("");
+
+    for (var i = 0; i < 9; i++) {
+      $('.wiki_results').append("<div class='wiki_title wiki_title_" + i + "'></div>" + "<div class='wiki_snippet wiki_snippet_" + i + "'></div>");
+    }
+
+    for (var j = 0; j < 9; j++) {
+      var title = wikiResponse.query.search[j].title;
+      var url = title.replace(/\s/g, "_");
+      var snippet = wikiResponse.query.search[j].snippet;
+      $(".wiki_title_" + j + "").html("<a href='https://en.wikipedia.org/wiki/" + url + "' target='_blank'>" + title + "</a>");
+      $(".wiki_snippet_" + j + "").html(snippet);
+    }
+
+  }
+
+  //When user clicks the search icon on the display section where the wiki results are appended
+  $('.after_search_container span').click(function() {
+    if ($('#after_search').val() == "") {
+      alert('Please enter a keyword to search');
+    } else {
+      var keyword = $('#after_search').val();
+      getWikiData(keyword);
+    }
+  });
+
+});
