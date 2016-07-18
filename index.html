@@ -1,52 +1,50 @@
-<!DOCTYPE HTML>
-<html lang="en">
 <head>
-<title>Wikipedia Viewer</title>
-<meta http-equiv="content-type" content="text, html; charset=utf-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">    
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>    
-<link rel="stylesheet" type="text/css" href="/main.css">
-<script type="text/javascript" src="/main.js"></script>
-    </head>
+  <title>Wiki Search</title>
+</head>
+
 <body>
-    <form id="my-form">
-     <div class="form-group">
-     <label class="sr-only" for="txt-input">Search </label>     
-    <input id="txt-input" class="txt-field" type="text" placeholder="Press Enter to Search" name="txt-input">
+
+ <!--Initially the searched result display will be hidden until user searches for something specific-->
+
+    <div class="hidden" id="searched_results_display">
+        <header>
+            <nav>
+                <a href="http://s.codepen.io/Kunal05/debug/vKZNzo" class="logo"><h1><span style="color:#3369E8">W</span><span style="color:#D50F25">i</span><span style="color:#EEB211">k</span><span style="color:#009925">i</span><h1></a>
+            <div class="after_search_container">
+                <input type="text" id="after_search"/ >
+                <span><i class="glyphicon glyphicon-search"></i></span>
+                </div>
+        </nav>
+        </header>
+        
+        
+            <section class="wiki_results">
+                
+            </section>
+            
+        
+     </div>   
+        
+    
+      
+      <!--Main page-->
+      
+      <!--Main body will be wrapped in this section-->
+      <div class="wrapper">
+        <div class="search_body">
+        <h1><span style="color:#3369E8">W</span><span style="color:#D50F25">i</span><span style="color:#EEB211">k</span><span style="color:#009925">i</span></h1>
+            <div><input type="text" placeholder="Search Wiki.." id="before_search" autofocus></div>
+            <div class="search_buttons">
+                
+                    <a href="#" class="btn btn-primary" id="search">Search</a>
+                    <a href="https://en.wikipedia.org/wiki/Special:Random" class="btn btn-primary" id="random" target="_blank">Random</a>
+                
+            </div>
         </div>
-        <!--
-    <input class="sub btn btn-primary" type="submit">
--->
-    <a href="http://en.wikipedia.org/wiki/Special:Random" target="_blank" class="rnd btn btn-info">Random Article</a>   
-    </form>
-    <div id="all-results">
-    <div class="result">
-    <h2 class="title-tag" id="title1"></h2>
-    <p class="url"><a href="#" id="url1"></a></p>
-    <p class="description" id="des1"></p>    
-    </div>
-    <div class="result">
-    <h2 class="title-tag" id="title2"></h2>
-    <p class="url"><a href="#" id="url2"></a></p>
-    <p class="description" id="des2"></p>    
-    </div>
-    <div class="result">
-    <h2 class="title-tag" id="title3"></h2>
-    <p class="url"><a href="#" id="url3"></a></p>
-    <p class="description" id="des3"></p>    
-    </div>
-    <div class="result">
-    <h2 class="title-tag" id="title4"></h2>
-    <p class="url"><a href="#" id="url4"></a></p>
-    <p class="description" id="des4"></p>    
-    </div>
-    <div class="result">
-    <h2 class="title-tag" id="title5"></h2>
-    <p class="url"><a href="#" id="url5"></a></p>
-    <p class="description" id="des5"></p>    
-    </div>    
-    </div>
-    </body>
-</html>
+        
+        
+      </div><!--/Main page-->
+  
+
+     
+</body>
