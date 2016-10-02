@@ -119,6 +119,53 @@ section{
   background-color: #eee;
   border-color: #bfb4b4;
 }
+.icon {
+  cursor: pointer;
+}
+.icon:active {
+  transition: .1s;
+  transform: scale(1.1);
+  opacity: 1;
+  position: relative;
+  z-index: 99;
+}
+.footer {
+  font-face: arial;
+  font-size: 15px;
+  position: absolute;
+  border-top: 1px solid black;
+  bottom: 20px;
+  width: 100%;
+  min-width: 350px;
+  padding: 1em 1em 0 1em;
+}
+.footer-logos {
+  margin-top: -1em;
+  font-size: 10px;
+}
+.footer-logos a {
+  text-decoration: none;
+}
+.footer-logos i {
+  text-align: center;
+  margin: 0 0 1em 1em;
+  padding-top: .25em;
+  border: 1px solid rgba(100, 100, 100, .3);
+  border-radius: 25%;
+  vertical-align: -1.5em;
+}
+.footer-logos .genericon {
+  width: 2em;
+  height: 2em;
+}
+.footer-logos .fa {
+  width: 2em;
+  height: 2em;  
+}
+.footer .container-fluid {
+  max-width: 500px;
+}
+
 
 .error{
   font-size:1.3em;
